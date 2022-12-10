@@ -1,9 +1,15 @@
 <?php
 
 include_once('../ProductionPlanCalculation.php');
+// Starting clock time in seconds
+$start_time = microtime(true);
 
-$arrDayOff = ['2022-12-03','2022-12-04','2022-12-10','2022-12-11','2022-12-17','2022-12-18','2022-12-24','2022-12-25','2022-12-31'];
+$arrDayOff = ['2022-11-26','2022-11-27','2022-12-03','2022-12-04','2022-12-10','2022-12-11','2022-12-17','2022-12-18','2022-12-24','2022-12-25','2022-12-31'];
 $arrSales = [
+    [
+        'date'  => '2022-12-02',
+        'shipping_qty'   => 24,
+    ],
     [
         'date'  => '2022-12-06',
         'shipping_qty'   => 60,
@@ -93,6 +99,11 @@ $arrSales = [
 $ppc = new ProductionPlanCalculation( 24, 5, 12, 12);
 $ppc->setDayOff($arrDayOff);
 $ppc->setSales($arrSales);
+// End clock time in seconds
+$end_time = microtime(true);
+
+echo "Execution time of script = ".(($end_time - $start_time)*1000)." Milisecon\n";
+
 echo "<pre>";
 print_r($ppc->calculate());
 echo "</pre>";
