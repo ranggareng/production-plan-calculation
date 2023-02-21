@@ -317,9 +317,19 @@ Class ProductionPlanCalculationService{
             if($prod > 0){
                 // if($arrayPlans[$date]['l_s'] < $this->minStock){
                     if($this->maxProduction < $this->totalShipping){
-                        $prod = floor($this->maxProduction/$this->perLot) * $this->perLot;
+                        $div = $this->maxProduction/$this->perLot;
+
+                        if($div < 1)
+                            $div = 1;
+
+                        $prod = $div * $this->perLot;
                     }else{
-                        $prod = floor($this->totalShipping/$this->perLot) * $this->perLot;
+                        $div = $this->totalShipping/$this->perLot;
+                        
+                        if($div < 1)
+                            $div = 1;
+
+                        $prod = $div * $this->perLot;
                     }
                 // }else{
                 //     $prod = floor($this->maxProduction/$this->perLot) * $this->perLot;
