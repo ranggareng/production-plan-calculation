@@ -17,7 +17,8 @@ class ProductionPlanCalculation extends CrudModel
         $response = [];
         if($result)
             foreach($result as $key => $ppc){
-                $response[$ppc->t_production_plan_calculation_date] = $ppc->t_production_plan_calculation_production;
+                var_dump($ppc);
+                $response[$ppc["t_production_plan_calculation_date"]] = $ppc["t_production_plan_calculation_production"];
             }
 
         return $response;
