@@ -56,8 +56,8 @@ class ProductionPlanCalculation extends CrudModel
                 $DB->transactionBegin();
                 $DB->delete(
                     't_production_plan_calculation', 
-                    ['productItem' => $productItem, 'planDate' => array_keys($plans)[0], 'isForecast' => $isForecast],
-                    't_production_plan_calculation_item=:productItem AND t_production_plan_calculation_date>=:planDate AND t_production_plan_calculation_is_forecast=:isForecast'
+                    ['productItem' => $productItem, 'startPlanDate' => array_keys($plans)[0], 'endPlanDate' => array_keys($plans)[count($plans)-1], 'isForecast' => $isForecast],
+                    't_production_plan_calculation_item=:productItem AND t_production_plan_calculation_date>=:startPlanDate And t_production_plan_calculation_date<=:endPlanDate AND t_production_plan_calculation_is_forecast=:isForecast'
                 );
 
                 $arrInsert = [];

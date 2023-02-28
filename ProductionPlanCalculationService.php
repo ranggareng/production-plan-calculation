@@ -317,14 +317,14 @@ Class ProductionPlanCalculationService{
             if($prod > 0){
                 // if($arrayPlans[$date]['l_s'] < $this->minStock){
                     if($this->maxProduction < $this->totalShipping){
-                        $div = ceil($this->maxProduction/$this->perLot);
+                        $div = floor($this->maxProduction/$this->perLot);
 
                         if($div < 1)
                             $div = 1;
 
                         $prod = $div * $this->perLot;
                     }else{
-                        $div = ceil($this->totalShipping/$this->perLot);
+                        $div = floor($this->totalShipping/$this->perLot);
                         
                         if($div < 1)
                             $div = 1;
