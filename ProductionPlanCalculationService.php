@@ -314,7 +314,7 @@ Class ProductionPlanCalculationService{
                 $prod = $this->perLot * $lotProd;
             }
 
-            if($prod > 0){
+            if($prod > 0 && !isset($this->lockedProduction[$date])){
                 // if($arrayPlans[$date]['l_s'] < $this->minStock){
                     if($this->maxProduction < $this->totalShipping){
                         $div = floor($this->maxProduction/$this->perLot);
