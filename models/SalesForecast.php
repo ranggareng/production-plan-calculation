@@ -6,7 +6,7 @@ class SalesForecast
 {
     public static function getSalesSummaryForPPCByItemPerDate($itemNumber, $ppcDate){
         $DB = \Database::connect();
-        $result = $DB->fetchRowMany("SELECT t_sales_fc_item, sum(t_sales_fc_qty) as qty, t_sales_fc_date FROM t_sales_fc JOIN m_item ON m_item_number = t_sales_fc_item WHERE t_sales_fc_item=:itemNumber AND t_sales_fc_date>=:ppcDate AND t_sales_fc_date<='2023-03-31' GROUP BY t_sales_fc_date, t_sales_fc_item", ["itemNumber" => $itemNumber, "ppcDate" => $ppcDate]);
+        $result = $DB->fetchRowMany("SELECT t_sales_fc_item, sum(t_sales_fc_qty) as qty, t_sales_fc_date FROM t_sales_fc JOIN m_item ON m_item_number = t_sales_fc_item WHERE t_sales_fc_item=:itemNumber AND t_sales_fc_date>=:ppcDate GROUP BY t_sales_fc_date, t_sales_fc_item", ["itemNumber" => $itemNumber, "ppcDate" => $ppcDate]);
         
         if(!$result){
             $DB->close();

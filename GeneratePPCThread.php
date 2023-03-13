@@ -182,7 +182,7 @@ class GeneratePPCThread extends Thread
                         }else if($dataForecastFromFirstProdDate){
                             $lastStock = $dataForecastFromFirstProdDate['t_production_plan_calculation_last_stock'];
                         }else{
-                            $lastStock = \SalesTrans::getBalanceQty($product['m_item_number']);
+                            $lastStock = \StockTrans::getBalanceQty($product['m_item_number']);
                         }
     
                         if(empty($dataFromLastMonth) && !empty($dataForecastFromLastMonth)){
