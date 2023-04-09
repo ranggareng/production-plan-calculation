@@ -40,7 +40,8 @@ class GeneratePPCThread extends Thread
             $defaultMinStock = 24;
 
             $products = \QueueGeneratePPC::getQueue('sales');
-            if($products){
+            $forcasts = \QueueGeneratePPC::getQueue('forecast');
+            if($products[0]['queue_generate_ppc_line_id'] || $forcasts[0]['queue_generate_ppc_line_id']){
                 foreach($products as $key => $product){
                     echo "Generate PPC Product Number ".$product['m_item_number']."\n";
                     $salesPerDay = \Sales::getSalesSummaryForPPCByItem($product['m_item_number'], date('Y-m-d'));
@@ -105,7 +106,7 @@ class GeneratePPCThread extends Thread
                         \QueueGeneratePPC::updateLineStatus($product['m_item_number'], 'sales');
                     }                
                 }
-
+                
                 $this->do_generate_forecast();
             }else{
                 \QueueGeneratePPC::updateHeadStatus();
