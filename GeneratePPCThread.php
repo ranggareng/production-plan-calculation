@@ -41,7 +41,10 @@ class GeneratePPCThread extends Thread
 
             $products = \QueueGeneratePPC::getQueue('sales');
             $forcasts = \QueueGeneratePPC::getQueue('forecast');
-            if($products[0]['queue_generate_ppc_line_id'] || $forcasts[0]['queue_generate_ppc_line_id']){
+            // var_dump($products);
+            if($products == false && $forcasts == false){
+                \QueueGeneratePPC::updateHeadStatus();
+            }else {
                 foreach($products as $key => $product){
                     echo "Generate PPC Product Number ".$product['m_item_number']."\n";
                     $salesPerDay = \Sales::getSalesSummaryForPPCByItem($product['m_item_number'], date('Y-m-d'));
@@ -108,8 +111,6 @@ class GeneratePPCThread extends Thread
                 }
                 
                 $this->do_generate_forecast();
-            }else{
-                \QueueGeneratePPC::updateHeadStatus();
             }
 
             return true;
@@ -134,7 +135,8 @@ class GeneratePPCThread extends Thread
         if($products){
             foreach($products as $key => $product){
                 echo "Generate PPC Forecast Product Number ".$product['m_item_number']."\n";
-                $salesPerDay = \SalesForecast::getSalesSummaryForPPCByItemPerDate($product['m_item_number'], date('Y-m-d'));
+                $salesPerDay = \SalesForecast::getSalesSummaryForPPCByItemPerDate($product['m_item_number'], date('Y-m-d'), $workingDayPerMonth, $arrDayOff);
+                // var_dump($salesPerDay);
                 $leadTime = $product['m_item_lead_time'] ? $product['m_item_lead_time'] : $defaultLeadTime;
                 $perLot = $product['m_item_qty_box'] ? $product['m_item_qty_box'] : $defaultPerLot;
     

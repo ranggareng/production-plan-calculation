@@ -107,7 +107,7 @@ Class ProductionPlanCalculationService{
                 * yang sedang berjalan
                 */
                 if(!isset($arrayPlans[$dateMinOneDay])){
-                    if(in_array($dateMinOneDay, array_column($this->calculationFromLastMonth, 't_production_plan_calculation_date'))){
+                    if(is_array($this->calculationFromLastMonth) && in_array($dateMinOneDay, array_column($this->calculationFromLastMonth, 't_production_plan_calculation_date'))){
                         $arrayIndex = array_search($dateMinOneDay, array_column($this->calculationFromLastMonth, 't_production_plan_calculation_date'));
                         $arrayPlans[$dateMinOneDay] = [
                             'date' => date('d/m', strtotime($this->date)),
@@ -244,7 +244,7 @@ Class ProductionPlanCalculationService{
              * ada di data sales/shipping terkecuali jika data merupakan dari bulan sebelumnya
              *
              */
-            if(!in_array($this->date, array_column($this->calculationFromLastMonth, 't_production_plan_calculation_date'))){
+            if($this->calculationFromLastMonth && !in_array($this->date, array_column($this->calculationFromLastMonth, 't_production_plan_calculation_date'))){
                 // echo $this->date.' Trigger 5 Ship Before: '.$arrayPlans[$this->date]['shipping']."\n";
                 if(in_array($this->date, array_column($this->arrSales, 'date'))){
 
